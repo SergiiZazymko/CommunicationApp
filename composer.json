@@ -12,6 +12,7 @@
         "zendframework/zendframework": "~2.5"
     },
     "require-dev": {
-        "zendframework/zftool": "dev-master"
+        "zendframework/zftool": "dev-master",
+        "zendframework/zend-developer-tools": "1.0"
     }
 }
