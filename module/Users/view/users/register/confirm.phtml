@@ -1,0 +1,9 @@
+<section class="register-confirm">
+    <h2>Register successfull</h2>
+    <p>Thank you!</p>
+    <p>Your data:</p>
+    <?php foreach ($this->data as $key => $value): ?>
+        <?php if (in_array($key, ['password', 'confirmPassword', 'submit'])) continue; ?>
+        <?= "$key - $value"; ?><br>
+    <?php endforeach; ?>
+</section>

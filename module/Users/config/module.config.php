@@ -17,9 +17,9 @@ return [
                     'default' => [
                         'type' => \Zend\Mvc\Router\Http\Segment::class,
                         'options' => [
-                            'route' => '/[:contr[/:action]]',
+                            'route' => '/[:controller[/:action]]',
                             'constraints' => [
-                                'contr' => '[a-zA-Z][a-zA-Z0-9_]*',
+                                'controller' => '[a-zA-Z][a-zA-Z0-9_]*',
                                 'action' => '[a-zA-Z][a-zA-Z0-9_]*',
                             ],
                             'defaults' => [
@@ -35,6 +35,7 @@ return [
     'controllers' => [
         'invokables' => [
             'Users\Controller\Index' => \Users\Controller\IndexController::class,
+            'Users\Controller\Register' => \Users\Controller\RegisterController::class,
         ],
     ],
 

@@ -1,0 +1,55 @@
+<section class="register">
+    <h2>Register</h2>
+    <?php if ($this->error): ?>
+        <p class="error">
+            There were one or more errors!
+        </p>
+    <?php endif; ?>
+
+    <?php
+        $form = $this->form;
+        $form->prepare();
+        $form->setAttribute('method', 'post');
+        $form->setAttribute('action', $this->url(null, [
+            'controller' => 'register',
+            'action' => 'index',
+        ]));
+        echo $this->form()->openTag($form);
+    ?>
+
+    <dl>
+        <?= $this->formLabel($form->get('name')); ?>
+    </dl>
+    <dd>
+        <?= $this->formElement($form->get('name')); ?>
+        <?= $this->formElementErrors($form->get('name')); ?>
+    </dd>
+
+    <dl>
+        <?= $this->formLabel($form->get('email')); ?>
+    </dl>
+    <dd>
+        <?= $this->formElement($form->get('email')); ?>
+        <?= $this->formElementErrors($form->get('email')); ?>
+    </dd>
+
+    <dl>
+        <?= $this->formLabel($form->get('password')); ?>
+    </dl>
+    <dd>
+        <?= $this->formElement($form->get('password')); ?>
+        <?= $this->formElementErrors($form->get('password')); ?>
+    </dd>
+
+    <dl>
+        <?= $this->formLabel($form->get('confirmPassword')); ?>
+    </dl>
+    <dd>
+        <?= $this->formElement($form->get('confirmPassword')); ?>
+        <?= $this->formElementErrors($form->get('confirmPassword')); ?>
+    </dd>
+
+    <dd>
+        <?= $this->formElement($form->get('submit')); ?>
+    </dd>
+</section>
