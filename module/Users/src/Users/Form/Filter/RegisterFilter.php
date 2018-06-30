@@ -71,7 +71,7 @@ class RegisterFilter extends InputFilter
         $confirmPassword->getValidatorChain()
             ->attach(new NotEmpty())
             ->attach(new Identical('password'));
-        $confirmPassword->setErrorMessage('Password must match!!!');
+        $confirmPassword->setErrorMessage('Two given passwords do not match! Please enter correct password!');
         $this->add($confirmPassword);
     }
 }

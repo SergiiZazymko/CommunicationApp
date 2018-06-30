@@ -18,11 +18,14 @@ class TimeController extends AbstractActionController
     {
         /** @var \DateTime $dateTime */
         $dateTime = new \DateTime();
-        /** @var string $currentTime */
-        $currentTime = $dateTime->format('H:i:s e d-m-Y');
+        /** @var string $time */
+        $time = $dateTime->format('H:i:s e');
+        /** @var string $date */
+        $date = $dateTime->format('d-m-Y');
 
         return new ViewModel([
-            'currentTime' => $currentTime,
+            'time' => $time,
+            'date' => $date,
         ]);
     }
 }
