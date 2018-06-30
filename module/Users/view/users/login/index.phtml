@@ -1,0 +1,35 @@
+<section class="login">
+    <h2>Login</h2>
+    <?php if ($this->error): ?>
+        <p class="error">Some error occures</p>
+    <?php endif; ?>
+
+    <?php
+        /** @var Zend\Form\Form $form */
+        $form = $this->form;
+        $form->prepare();
+        $form->setAttribute('action', $this->url(null, [
+                'controller' => 'Login',
+                'action' => 'index',
+        ]));
+        $form->setAttribute('method', 'post');
+        echo $this->form()->openTag($form);
+    ?>
+
+    <dl class="zend-form">
+        <dt><?= $this->formLabel($form->get('email')); ?></dt>
+        <dd>
+            <?= $this->formElement($form->get('email')); ?>
+            <?= $this->formElementErrors($form->get('email')); ?>
+        </dd>
+
+        <dt><?= $this->formLabel($form->get('password')); ?></dt>
+        <dd>
+            <?= $this->formElement($form->get('password')); ?>
+            <?= $this->formElementErrors($form->get('password')); ?>
+        </dd>
+
+        <dd><?= $this->formElement($form->get('submit')); ?></dd>
+    </dl>
+
+</section>

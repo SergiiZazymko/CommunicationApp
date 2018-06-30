@@ -36,6 +36,7 @@ return [
         'invokables' => [
             'Users\Controller\Index' => \Users\Controller\IndexController::class,
             'Users\Controller\Register' => \Users\Controller\RegisterController::class,
+            'Users\Controller\Login' => \Users\Controller\LoginController::class,
         ],
     ],
 
