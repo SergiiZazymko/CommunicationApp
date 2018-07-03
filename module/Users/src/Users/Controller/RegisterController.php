@@ -5,9 +5,6 @@ namespace Users\Controller;
 use Users\Entity\User;
 use Users\Form\RegisterForm;
 use Users\Repository\UserRepository;
-use Zend\Db\Adapter\Adapter;
-use Zend\Db\ResultSet\ResultSet;
-use Zend\Db\TableGateway\TableGateway;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
@@ -25,7 +22,7 @@ class RegisterController extends AbstractActionController
         /** @var boolean $error */
         $error = false;
         /** @var RegisterForm $form */
-        $form = new RegisterForm();
+        $form = $this->getServiceLocator()->get('RegisterForm');
 
         if ($this->getRequest()->isPost()) {
             if ($form->setData($this->params()->fromPost())->isValid()) {
@@ -56,18 +53,8 @@ class RegisterController extends AbstractActionController
      */
     protected function createUser(array $data)
     {
-        /** @var Adapter $adapter */
-        $adapter = $this->getServiceLocator()->get('Database');
-
-        /** @var ResultSet $resultSetPrototype */
-        $resultSetPrototype = new ResultSet();
-        $resultSetPrototype->setArrayObjectPrototype(new User());
-
-        /** @var TableGateway $tableGateway */
-        $tableGateway = new TableGateway('user', $adapter, null, $resultSetPrototype);
-
         /** @var UserRepository $userRepository */
-        $userRepository = new UserRepository($tableGateway);
+        $userRepository = $this->getServiceLocator()->get('UserRepository');
 
         /** @var User $user */
         $user = new User();

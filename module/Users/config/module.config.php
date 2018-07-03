@@ -45,4 +45,12 @@ return [
             'users' => __DIR__ . '/../view',
         ],
     ],
+
+    'service_manager' => [
+        'factories' => [
+            'UserRepository' => \Users\Repository\UserRepositoryFactory::class,
+            'LoginForm' => \Users\Form\LoginFormFactory::class,
+            'RegisterForm' => \Users\Form\RegisterFormFactory::class,
+        ],
+    ],
 ];

@@ -26,7 +26,7 @@ class LoginController extends AbstractActionController
         /** @var boolean $error */
         $error = false;
         /** @var LoginForm $form */
-        $form = new LoginForm();
+        $form = $this->getServiceLocator()->get('LoginForm');
         if ($this->getRequest()->isPost()) {
             if ($form->setData($this->params()->fromPost())->isValid()) {
                 $this->getAuthService()->getAdapter()
