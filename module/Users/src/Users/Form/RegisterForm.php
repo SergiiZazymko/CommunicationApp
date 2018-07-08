@@ -22,7 +22,7 @@ class RegisterForm extends Form
     public function __construct($name = 'Register')
     {
         parent::__construct($name);
-        $this->setAttribute('methos', 'post')
+        $this->setAttribute('method', 'post')
             ->setAttribute('enctype', 'multipart/form-data');
         $this->setInputFilter(new RegisterFilter());
 

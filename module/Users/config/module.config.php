@@ -51,6 +51,10 @@ return [
             'UserRepository' => \Users\Repository\UserRepositoryFactory::class,
             'LoginForm' => \Users\Form\LoginFormFactory::class,
             'RegisterForm' => \Users\Form\RegisterFormFactory::class,
+            'AuthService' => \Users\Factory\AuthServiceFactory::class,
+        ],
+        'aliases' => [
+
         ],
     ],
 ];

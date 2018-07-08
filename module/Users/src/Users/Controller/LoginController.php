@@ -3,9 +3,7 @@
 namespace Users\Controller;
 
 use Users\Form\LoginForm;
-use Zend\Authentication\Adapter\DbTable;
 use Zend\Authentication\AuthenticationService;
-use Zend\Db\Adapter\Adapter;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
@@ -51,8 +49,12 @@ class LoginController extends AbstractActionController
         ]);
     }
 
+    /**
+     * @return ViewModel
+     */
     public function confirmAction()
     {
+        /** @var string $email */
         $email = $this->getAuthService()->getStorage()->read();
         return new ViewModel(['email' => $email]);
     }
@@ -63,19 +65,8 @@ class LoginController extends AbstractActionController
     protected function getAuthService()
     {
         if (! $this->authService) {
-            /** @var Adapter $dbAdapter */
-            $dbAdapter = $this->getServiceLocator()->get('Database');
-            /** @var DbTable $dbTableAuthAdapter */
-            $dbTableAuthAdapter = new DbTable(
-                $dbAdapter,
-                'user',
-                'email',
-                'password',
-                'MD5(?)');
-
             /** @var AuthenticationService $authService */
-            $authService = new AuthenticationService();
-            $authService->setAdapter($dbTableAuthAdapter);
+            $authService = $this->getServiceLocator()->get('AuthService');
             $this->authService = $authService;
         }
         return $this->authService;
