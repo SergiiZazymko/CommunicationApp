@@ -79,4 +79,37 @@ class UserRepository
             }
         }
     }
+
+    /**
+     * @return ResultSet
+     */
+    public function fetchAll()
+    {
+        return $this->tableGateway->select();
+    }
+
+    /**
+     * @param $email
+     * @return array|\ArrayObject|null
+     * @throws \Exception
+     */
+    public function getUserByEmail($email)
+    {
+        /** @var ResultSet $rowset */
+        $rowset = $this->tableGateway->select(['email' => $email]);
+        /** @var User $user */
+        $user = $rowset->current();
+        if (! $user) {
+            throw new \Exception(sprintf('Can not find user with email %s', $email));
+        }
+        return $user;
+    }
+
+    /**
+     * @param $id
+     */
+    public function deleteUser($id)
+    {
+        $this->tableGateway->delete(['id' => $id]);
+    }
 }

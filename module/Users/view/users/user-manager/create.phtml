@@ -1,0 +1,50 @@
+<section class="register">
+    <h2>Create user</h2>
+
+    <?php
+    /** @var \Zend\Form\Form $form */
+    $form = $this->form;
+    $form->prepare();
+    $form->setAttribute('method', 'post');
+    $form->get('submit')->setValue('Create');
+    echo $this->form()->openTag($form);
+    ?>
+
+    <dl>
+        <?= $this->formLabel($form->get('name')); ?>
+    </dl>
+    <dd>
+        <?= $this->formElement($form->get('name')); ?>
+        <?= $this->formElementErrors($form->get('name')); ?>
+    </dd>
+
+    <dl>
+        <?= $this->formLabel($form->get('email')); ?>
+    </dl>
+    <dd>
+        <?= $this->formElement($form->get('email')); ?>
+        <?= $this->formElementErrors($form->get('email')); ?>
+    </dd>
+
+    <dl>
+        <?= $this->formLabel($form->get('password')); ?>
+    </dl>
+    <dd>
+        <?= $this->formElement($form->get('password')); ?>
+        <?= $this->formElementErrors($form->get('password')); ?>
+    </dd>
+
+    <dl>
+        <?= $this->formLabel($form->get('confirmPassword')); ?>
+    </dl>
+    <dd>
+        <?= $this->formElement($form->get('confirmPassword')); ?>
+        <?= $this->formElementErrors($form->get('confirmPassword')); ?>
+    </dd>
+
+    <dd>
+        <?= $this->formElement($form->get('submit')); ?>
+    </dd>
+
+    <?= $this->form()->closeTag(); ?>
+</section>

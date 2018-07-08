@@ -23,6 +23,7 @@ class RegisterController extends AbstractActionController
         $error = false;
         /** @var RegisterForm $form */
         $form = $this->getServiceLocator()->get('RegisterForm');
+        $form->get('submit')->setValue('Register');
 
         if ($this->getRequest()->isPost()) {
             if ($form->setData($this->params()->fromPost())->isValid()) {

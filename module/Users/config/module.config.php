@@ -27,6 +27,20 @@ return [
                             ],
                         ],
                     ],
+                    'user-manager' => [
+                        'type' => \Zend\Mvc\Router\Http\Segment::class,
+                        'options' => [
+                            'route' => '/user-manager[/:action[/:id]]',
+                            'constraints' => [
+                                'action' => '[a-zA-Z][a-zA-Z0-9_]*',
+                                'id' => '\d*',
+                            ],
+                            'defaults' => [
+                                'controller' => 'Users\Controller\UserManager',
+                                'actoon' => 'index',
+                            ],
+                        ],
+                    ],
                 ],
             ],
         ],
@@ -37,6 +51,7 @@ return [
             'Users\Controller\Index' => \Users\Controller\IndexController::class,
             'Users\Controller\Register' => \Users\Controller\RegisterController::class,
             'Users\Controller\Login' => \Users\Controller\LoginController::class,
+            'Users\Controller\UserManager' => \Users\Controller\UserManagerController::class,
         ],
     ],
 
@@ -49,9 +64,10 @@ return [
     'service_manager' => [
         'factories' => [
             'UserRepository' => \Users\Repository\UserRepositoryFactory::class,
-            'LoginForm' => \Users\Form\LoginFormFactory::class,
-            'RegisterForm' => \Users\Form\RegisterFormFactory::class,
+            'LoginForm' => \Users\Form\Factory\LoginFormFactory::class,
+            'RegisterForm' => \Users\Form\Factory\RegisterFormFactory::class,
             'AuthService' => \Users\Factory\AuthServiceFactory::class,
+            'UserEditForm' => \Users\Form\Factory\UserEditFormFactory::class,
         ],
         'aliases' => [
 

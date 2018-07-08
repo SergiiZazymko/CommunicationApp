@@ -15,4 +15,5 @@ namespace Users\StdLib;
 class Table
 {
     const USER = 'user';
+    const FILE = 'file';
 }

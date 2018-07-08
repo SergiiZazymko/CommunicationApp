@@ -39,10 +39,28 @@ class User
      */
     public function exchangeArray(array $data)
     {
-        $this->name = $data['name'] ?? null;
-        $this->email = $data['email'] ?? null;
+        if (isset($data['id'])) {
+            $this->id = $data['id'];
+        }
+
+        if (isset($data['name'])) {
+            $this->name = $data['name'];
+        }
+
+        if (isset($data['email'])) {
+            $this->email = $data['email'];
+        }
+
         if (isset($data['password'])) {
             $this->setPassword($data['password']);
         }
+    }
+
+    /**
+     * @return array
+     */
+    public function getArrayCopy()
+    {
+        return get_object_vars($this);
     }
 }

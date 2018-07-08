@@ -11,6 +11,7 @@ return array(
         'CurrentTime',
         'Users',
         'ZendDeveloperTools',
+        'Files',
     ),
     'module_listener_options' => array(
         'module_paths' => array(

@@ -1,0 +1,30 @@
+<section class="edit-user">
+    <h2>Edit user</h2>
+
+    <?php
+    /** @var Zend\Form\Form $form */
+    $form = $this->form;
+    $form->prepare();
+    $form->setAttribute('method', 'post');
+    echo $this->form()->openTag($form);
+    ?>
+
+    <dl class="zend-form">
+        <dt><?= $this->formLabel($form->get('name')); ?></dt>
+        <dd>
+            <?= $this->formElement($form->get('name')); ?>
+            <?= $this->formElementErrors($form->get('name')); ?>
+        </dd>
+
+        <dt><?= $this->formLabel($form->get('email')); ?></dt>
+        <dd>
+            <?= $this->formElement($form->get('email')); ?>
+            <?= $this->formElementErrors($form->get('email')); ?>
+        </dd>
+
+        <dd><?= $this->formElement($form->get('submit')); ?></dd>
+    </dl>
+
+    <?= $this->form()->closeTag(); ?>
+
+</section>

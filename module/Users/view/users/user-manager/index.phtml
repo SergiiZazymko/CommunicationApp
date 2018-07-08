@@ -1,0 +1,18 @@
+<table style="width: 80%;">
+    <tr style="border-bottom: 1px solid lightgrey;">
+        <th>Name</th>
+        <th>Email</th>
+        <th><a href="<?= $this->url(null, ['controller' => 'UserManager', 'action' => 'create']); ?>">Create new user</a></th>
+    </tr>
+
+    <?php foreach ($this->users as $user): ?>
+        <tr style="border-bottom: 1px solid lightgrey;">
+            <td style="padding: 5px;"><?= $user->name; ?></td>
+            <td style="padding: 5px;"><?= $user->email; ?></td>
+            <td style="padding: 5px;">
+                <a href="<?= $this->url(null, ['controller' => 'UserManager', 'action' => 'edit', 'id' => $user->id]); ?>">Edit</a> |
+                <a href="<?= $this->url(null, ['controller' => 'UserManager', 'action' => 'delete', 'id' => $user->id]); ?>" onClick="return confirm('Are you sure you want to delete this user?');">Delete</a>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+</table>

@@ -6,24 +6,25 @@
  * Time: 22:44
  */
 
-namespace Users\Form;
+namespace Users\Form\Factory;
 
 
+use Users\Form\UserEditForm;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
- * Class RegisterFormFactory
- * @package Users\Form\Filter
+ * Class UserEditFormFactory
+ * @package Users\Form\Factory
  */
-class RegisterFormFactory implements FactoryInterface
+class UserEditFormFactory implements FactoryInterface
 {
     /**
      * @param ServiceLocatorInterface $serviceLocator
-     * @return mixed|RegisterForm
+     * @return mixed|UserEditForm
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        return new RegisterForm();
+        return new UserEditForm();
     }
 }

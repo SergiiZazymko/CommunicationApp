@@ -3,27 +3,28 @@
  * Created by PhpStorm.
  * User: sergii
  * Date: 03.07.18
- * Time: 22:42
+ * Time: 22:44
  */
 
-namespace Users\Form;
+namespace Users\Form\Factory;
 
 
+use Users\Form\RegisterForm;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
- * Class LoginFormFactory
- * @package Users\Form
+ * Class RegisterFormFactory
+ * @package Users\Form\Filter
  */
-class LoginFormFactory implements FactoryInterface
+class RegisterFormFactory implements FactoryInterface
 {
     /**
      * @param ServiceLocatorInterface $serviceLocator
-     * @return mixed|LoginForm
+     * @return mixed|RegisterForm
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        return new LoginForm();
+        return new RegisterForm();
     }
 }
