@@ -1,0 +1,33 @@
+<section class="register">
+    <h2>Upload file</h2>
+
+    <?php
+    /** @var \Zend\Form\Form $form */
+    $form = $this->form;
+    $form->prepare();
+    $form->setAttribute('method', 'post');
+    echo $this->form()->openTag($form);
+    ?>
+
+    <dl>
+        <?= $this->formLabel($form->get('description')); ?>
+    </dl>
+    <dd>
+        <?= $this->formElement($form->get('description')); ?>
+        <?= $this->formElementErrors($form->get('description')); ?>
+    </dd>
+
+    <dl>
+        <?= $this->formLabel($form->get('file')); ?>
+    </dl>
+    <dd>
+        <?= $this->formElement($form->get('file')); ?>
+        <?= $this->formElementErrors($form->get('file')); ?>
+    </dd>
+
+    <dd>
+        <?= $this->formElement($form->get('submit')); ?>
+    </dd>
+
+    <?= $this->form()->closeTag(); ?>
+</section>

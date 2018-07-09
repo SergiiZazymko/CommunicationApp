@@ -51,7 +51,7 @@ class FileRepository
 
         if ($id) {
             if ($this->getFile($id)) {
-                $this->tableGateway->update($data, ['id' => $is]);
+                $this->tableGateway->update($data, ['id' => $id]);
             } else {
                 throw new \Exception(sprintf('Can\'t find file whith id %d', $id));
             }

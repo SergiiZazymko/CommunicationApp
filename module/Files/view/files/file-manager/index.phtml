@@ -1,0 +1,18 @@
+<table style="width: 80%;">
+    <tr style="border-bottom: 1px solid lightgrey;">
+        <th>Filename</th>
+        <th>Lable</th>
+        <th><a href="<?= $this->url(null, ['controller' => 'UserManager', 'action' => 'upload']); ?>">Upload new file</a></th>
+    </tr>
+
+    <?php foreach ($this->files as $file): ?>
+        <tr style="border-bottom: 1px solid lightgrey;">
+            <td style="padding: 5px;"><?= $file->filename; ?></td>
+            <td style="padding: 5px;"><?= $file->label; ?></td>
+            <td style="padding: 5px;">
+                <a href="<?= $this->url(null, ['controller' => 'UserManager', 'action' => 'edit', 'id' => $file->id]); ?>">Edit</a> |
+                <a href="<?= $this->url(null, ['controller' => 'UserManager', 'action' => 'delete', 'id' => $file->id]); ?>" onClick="return confirm('Are you sure you want to delete this user?');">Delete</a>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+</table>
