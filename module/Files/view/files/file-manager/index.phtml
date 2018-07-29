@@ -3,7 +3,7 @@
     <tr style="border-bottom: 1px solid lightgrey;">
         <th>Filename</th>
         <th>Lable</th>
-        <th><a href="<?= $this->url(null, ['controller' => 'UserManager', 'action' => 'upload']); ?>">Upload new file</a></th>
+        <th><a href="<?= $this->url(null, ['action' => 'upload']); ?>">Upload new file</a></th>
     </tr>
 
     <?php foreach ($this->files as $file): ?>
@@ -11,8 +11,8 @@
             <td style="padding: 5px;"><?= $file->filename; ?></td>
             <td style="padding: 5px;"><?= $file->label; ?></td>
             <td style="padding: 5px;">
-                <a href="<?= $this->url(null, ['controller' => 'UserManager', 'action' => 'edit', 'id' => $file->id]); ?>">Edit</a> |
-                <a href="<?= $this->url(null, ['controller' => 'UserManager', 'action' => 'delete', 'id' => $file->id]); ?>" onClick="return confirm('Are you sure you want to delete this user?');">Delete</a>
+                <a href="<?= $this->url(null, ['action' => 'edit', 'id' => $file->id]); ?>">Edit</a> |
+                <a href="<?= $this->url(null, ['action' => 'delete', 'id' => $file->id]); ?>" onClick="return confirm('Are you sure you want to delete this user?');">Delete</a>
             </td>
         </tr>
     <?php endforeach; ?>
@@ -24,6 +24,7 @@
         <th>Filename</th>
         <th>Lable</th>
         <th>Owner</th>
+        <th>&nbsp</th>
     </tr>
 
     <?php foreach ($this->sharedFiles as $file): ?>
@@ -31,6 +32,9 @@
             <td style="padding: 5px;"><?= $file->filename; ?></td>
             <td style="padding: 5px;"><?= $file->label; ?></td>
             <td style="padding: 5px;"><?= $file->user_id; ?></td>
+            <td style="padding: 5px;">
+                <a href="<?= $this->url(null, ['action' => 'download', 'id' => $file->id]); ?>">Download</a>
+            </td>
 
         </tr>
     <?php endforeach; ?>

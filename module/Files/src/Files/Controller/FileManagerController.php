@@ -11,6 +11,7 @@ use Users\Repository\UserRepository;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\ServiceManager\ServiceManager;
+use Zend\Stdlib\ResponseInterface;
 use Zend\View\Model\ViewModel;
 
 /**
@@ -215,6 +216,37 @@ class FileManagerController extends AbstractActionController
             'action' => 'edit',
             'id' => $fileId,
         ]);
+    }
+
+    /**
+     * @return ResponseInterface
+     * @throws \Exception
+     */
+    public function downloadAction()
+    {
+        /** @var int $fileId */
+        $fileId = intval($this->params()->fromRoute('id'));
+
+        /** @var FileRepository $fileRepository */
+        $fileRepository = $this->getServiceLocator()->get('FileRepository');
+
+        /** @var File $file */
+        $file = $fileRepository->getFile($fileId);
+
+        /** @var string $content */
+        $content = file_get_contents($file->filename);
+
+        /** @var ResponseInterface $response */
+        $response = $this->getEvent()->getResponse();
+
+        $response->getHeaders()->addHeaders([
+            'Content-Type' => 'application/octet-stream',
+            'Content-Disposition' => 'attachment;filename="' . basename($file->filename) . '"',
+        ]);
+
+        $response->setContent($content);
+
+        return $response;
     }
 }
 
