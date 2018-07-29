@@ -3,6 +3,7 @@
 namespace Files\Controller;
 
 use Files\Entity\File;
+use Files\Form\EditForm;
 use Files\Form\UploadForm;
 use Files\Repository\FileRepository;
 use Users\Entity\User;
@@ -12,9 +13,16 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\ServiceManager\ServiceManager;
 use Zend\View\Model\ViewModel;
 
+/**
+ * Class FileManagerController
+ * @package Files\Controller
+ */
 class FileManagerController extends AbstractActionController
 {
-
+    /**
+     * @return array|ViewModel
+     * @throws \Exception
+     */
     public function indexAction()
     {
         /** @var ServiceManager $sm */
@@ -33,10 +41,14 @@ class FileManagerController extends AbstractActionController
         $user = $userRepository->getUserByEmail($userEmail);
 
         /** @var ResultSet $rowset */
-        $rowset = $fileRepository->getUploadsByUserId($user->id);
+        $files = $fileRepository->getUploadsByUserId($user->id);
+
+        /** @var ResultSet $sharedFiles */
+        $sharedFiles = $fileRepository->getSharedFilesForUserId($user->id);
 
         return new ViewModel([
-            'files' => $rowset,
+            'files' => $files,
+            'sharedFiles' => $sharedFiles,
             'email' => $userEmail,
         ]);
     }
@@ -95,6 +107,113 @@ class FileManagerController extends AbstractActionController
 
         return new ViewModel([
             'form' => $form,
+        ]);
+    }
+
+    /**
+     * @return \Zend\Http\Response|ViewModel
+     * @throws \Exception
+     */
+    public function editAction()
+    {
+        /** @var ServiceManager $serviceManager */
+        $serviceManager = $this->getServiceLocator();
+
+        /** @var FileRepository $fileRepository */
+        $fileRepository = $serviceManager->get('FileRepository');
+
+        /** @var EditForm $form */
+        $form = $serviceManager->get('EditForm');
+
+        if ($this->getRequest()->isPost() && $form->setData($this->params()->fromPost())->isValid()) {
+            /** @var int $userId */
+            $userId = intval($form->getData()['select']);
+
+            /** @var int $fileId */
+            $fileId = intval($this->params()->fromRoute('id'));
+
+            $fileRepository->addSharing($fileId, $userId);
+
+            return $this->redirect()->toRoute(null, [
+                'controller' => 'FilesManager',
+                'action' => 'edit',
+                'id' => $fileId,
+            ]);
+
+        }
+
+        /** @var int $fileId */
+        $fileId = intval($this->params()->fromRoute('id'));
+
+        /** @var File $file */
+        $file = $fileRepository->getFile($fileId);
+
+        /** @var string` $fileName */
+        $fileName = $file->filename;
+
+        /** @var ResultSet $sharedUsers */
+        $sharedUsers = $fileRepository->getSharedUsers($fileId);
+
+        return new ViewModel([
+            'fileId' => $fileId,
+            'fileName' => $fileName,
+            'sharedUsers' => $sharedUsers,
+            'form' => $form,
+        ]);
+    }
+
+    /**
+     * @return \Zend\Http\Response
+     * @throws \Exception
+     */
+    public function deleteAction()
+    {
+        /** @var ServiceManager $serviceManager */
+        $serviceManager = $this->getServiceLocator();
+
+        /** @var FileRepository $fileRepository */
+        $fileRepository = $serviceManager->get('FileRepository');
+
+        /** @var int $fileId */
+        $fileId = intval($this->params()->fromRoute('id'));
+
+        /** @var File $file */
+        $file = $fileRepository->getFile($fileId);
+
+        /** @var string` $fileName */
+        $fileName = $file->filename;
+
+        if (file_exists($fileName)) {
+            unlink($fileName);
+        }
+
+        $fileRepository->deleteFile($fileId);
+
+        return $this->redirect()->toRoute(null, [
+            'controller' => 'FileManager',
+            'action' => 'index',
+        ]);
+    }
+
+    /**
+     * @return \Zend\Http\Response
+     */
+    public function deleteSharingAction()
+    {
+        /** @var int $fileId */
+        $fileId = intval($this->params()->fromRoute('id'));
+        /** @var int $userId */
+        $userId = intval($this->params()->fromRoute('userId'));
+
+        /** @var FileRepository $fileRepository */
+        $fileRepository = $this->getServiceLocator()->get('FileRepository');
+
+        $fileRepository->deleteSharing($fileId, $userId);
+
+        return $this->redirect()->toRoute(null, [
+            'controller' => 'FileManger',
+            'action' => 'edit',
+            'id' => $fileId,
         ]);
     }
 }

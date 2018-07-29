@@ -16,4 +16,5 @@ class Table
 {
     const USER = 'user';
     const FILE = 'file';
+    const FILE_SHARING = 'file_sharing';
 }

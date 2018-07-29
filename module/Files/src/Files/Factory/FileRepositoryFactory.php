@@ -36,6 +36,11 @@ class FileRepositoryFactory implements FactoryInterface
             $resultSet
         );
 
-        return new FileRepository($tableGateway);
+        $fileSharingTableGateway = new TableGateway(
+            Table::FILE_SHARING,
+            $adapter
+        );
+
+        return new FileRepository($tableGateway, $fileSharingTableGateway);
     }
 }

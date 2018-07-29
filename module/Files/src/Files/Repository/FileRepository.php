@@ -11,6 +11,7 @@ namespace Files\Repository;
 
 use Files\Entity\File;
 use Zend\Db\ResultSet\ResultSet;
+use Zend\Db\Sql\Select;
 use Zend\Db\TableGateway\TableGateway;
 
 /**
@@ -22,13 +23,17 @@ class FileRepository
     /** @var TableGateway $tableGateway */
     protected $tableGateway;
 
+    /** @var TableGateway $fileSharingTableGateway */
+    protected $fileSharingTableGateway;
+
     /**
      * FileRepository constructor.
      * @param TableGateway $tableGateway
      */
-    public function __construct(TableGateway $tableGateway)
+    public function __construct(TableGateway $tableGateway, TableGateway $fileSharingTableGateway)
     {
         $this->tableGateway = $tableGateway;
+        $this->fileSharingTableGateway = $fileSharingTableGateway;
     }
 
     /**
@@ -104,5 +109,67 @@ class FileRepository
     public function getUploadsByUserId($userId)
     {
         return $this->tableGateway->select(['user_id' => $userId]);
+    }
+
+    /**
+     * @param $fileId
+     * @param $userId
+     */
+    public function addSharing($fileId, $userId)
+    {
+        /** @var array $data */
+        $data = [
+            'file_id' => intval($fileId),
+            'user_id' => intval($userId),
+        ];
+
+        $this->fileSharingTableGateway->insert($data);
+    }
+
+    /**
+     * @param $fileId
+     * @param $userId
+     */
+    public function deleteSharing($fileId, $userId)
+    {
+        /** @var array $data */
+        $data = [
+            'file_id' => intval($fileId),
+            'user_id' => intval($userId),
+        ];
+
+        $this->fileSharingTableGateway->delete($data);
+    }
+
+    /**
+     * @param $fileId
+     * @return ResultSet
+     */
+    public function getSharedUsers($fileId)
+    {
+        /** @var int $fileId */
+        $fileId = intval($fileId);
+
+        return $this->fileSharingTableGateway->select(function (Select $select) use ($fileId) {
+            $select->columns([])
+                ->where(['file_sharing.file_id' => $fileId])
+                ->join('user', 'file_sharing.user_id = user.id');
+        });
+    }
+
+    /**
+     * @param $userId
+     * @return ResultSet
+     */
+    public function getSharedFilesForUserId($userId)
+    {
+        /** @var int $userId */
+        $userId = intval($userId);
+
+        return $this->fileSharingTableGateway->select(function (Select $select) use ($userId) {
+            $select->columns([])
+                ->where(['file_sharing.user_id' => $userId])
+                ->join('file', 'file_sharing.file_id = file.id');
+        });
     }
 }

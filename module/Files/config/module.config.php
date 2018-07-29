@@ -12,10 +12,11 @@ return [
                     'file-manager' => [
                         'type' => \Zend\Mvc\Router\Http\Segment::class,
                         'options' => [
-                            'route' => '[/file-manager[/:action][/:id]]',
+                            'route' => '[/file-manager[/:action][/:id][/:userId]]',
                             'constraints' => [
                                 'action' => '[a-zA-Z][a-zA-Z0-9_]*',
                                 'id' => '\d*',
+                                'userId' => '\d*',
                             ],
                             'defaults' => [
                                 'controller' => 'Files\Controller\FileManager',
@@ -47,10 +48,12 @@ return [
         'factories' => [
             \Files\Repository\FileRepository::class => \Files\Factory\FileRepositoryFactory::class,
             \Files\Form\UploadForm::class => \Files\Factory\UploadFormFactory::class,
+            \Files\Form\EditForm::class => \Files\Factory\EditFormFactory::class,
         ],
         'aliases' => [
             'FileRepository' => \Files\Repository\FileRepository::class,
             'UploadForm' => \Files\Form\UploadForm::class,
+            'EditForm' => \Files\Form\EditForm::class,
         ]
     ],
 
