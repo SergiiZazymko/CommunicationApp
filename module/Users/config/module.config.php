@@ -37,9 +37,23 @@ return [
                             ],
                             'defaults' => [
                                 'controller' => 'Users\Controller\UserManager',
-                                'actoon' => 'index',
+                                'action' => 'index',
                             ],
                         ],
+                    ],
+                ],
+            ],
+            'group-chat' => [
+                'type' => \Zend\Mvc\Router\Http\Segment::class,
+                'options' => [
+                    'route' => '/group-chat[/:action[/:id]]',
+                    'constraints' => [
+                        'action' => '[a-zA-Z][a-zA-Z0-9_]*',
+                        'id' => '\d*',
+                    ],
+                    'defaults' => [
+                        'controller' => 'Users\Controller\GroupChat',
+                        'action' => 'index',
                     ],
                 ],
             ],
@@ -52,6 +66,7 @@ return [
             'Users\Controller\Register' => \Users\Controller\RegisterController::class,
             'Users\Controller\Login' => \Users\Controller\LoginController::class,
             'Users\Controller\UserManager' => \Users\Controller\UserManagerController::class,
+            'Users\Controller\GroupChat' => \Users\Controller\GroupChatController::class,
         ],
     ],
 
