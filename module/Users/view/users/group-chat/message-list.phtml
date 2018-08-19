@@ -1,3 +1,11 @@
+<head>
+    <?php //echo $this->headMeta()->setHttpEquiv('refresh', '5'); ?>
+    <?php echo $this->headScript()->prependScript(
+            'setTimeout(function(){
+                window.location.reload(1);
+             }, 5000);'
+    ); ?>
+</head>
 <section id="messages">
     <?php foreach ($this->messageList as $message): ?>
         <div class="message" style="clear: both">
