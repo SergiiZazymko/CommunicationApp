@@ -2,10 +2,10 @@
 
 <html lang="en">
     <head>
-        <meta charset="utf-8">
-        <?php echo $this->headTitle('ZF2 '. $this->translate('Skeleton Application'))->setSeparator(' - ')->setAutoEscape(false) ?>
 
-        <?php echo $this->headMeta()
+        <!-- Meta -->
+        <?php echo $this->headTitle('ZF2 '. $this->translate('Skeleton Application'))->setSeparator(' - ')->setAutoEscape(false) ?>
+        <?php echo $this->headMeta()->setCharset('utf-8')
             ->appendName('viewport', 'width=device-width, initial-scale=1.0')
             ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
         ?>
@@ -26,6 +26,12 @@
             ->prependFile($this->basePath('js/jquery-ui-1.12.1/jquery-ui.js'), 'text/javascript')
         ; ?>
 
+        <?php echo $this->headScript()->prependScript(
+            '$(function() {
+            $("a.ui-button").button();
+        });', 'text/javascript'
+        ); ?>
+
     </head>
     <body>
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -42,6 +48,7 @@
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Home') ?></a></li>
                         <li class="active"><a href="<?php echo $this->url('users') ?>"><?php echo $this->translate('Users') ?></a></li>
+                        <li class="active"><a href="<?php echo $this->url('users/group-chat') ?>"><?php echo $this->translate('Group chat') ?></a></li>
                         <li class="active"><a href="<?php echo $this->url('users/user-manager', ['action' => 'index']); ?>"><?php echo $this->translate('Users manager') ?></a></li>
                         <li class="active"><a href="<?php echo $this->url('files/file-manager', ['action' => 'index']); ?>"><?php echo $this->translate('Files manager') ?></a></li>
                         <li class="active"><a href="/time/index"><?php echo $this->translate('Current time') ?></a></li>

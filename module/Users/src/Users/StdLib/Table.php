@@ -14,7 +14,8 @@ namespace Users\StdLib;
  */
 class Table
 {
-    const USER = 'user';
+    const CHAT_MESSAGES = 'chat_messages';
     const FILE = 'file';
     const FILE_SHARING = 'file_sharing';
+    const USER = 'user';
 }

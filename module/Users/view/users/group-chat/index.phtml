@@ -1,0 +1,44 @@
+<?php
+
+$this->headScript()->appendScript(
+    '$(function) () {
+        $("#btnRefresh").click(function (event) {
+            document.getElementById("messageListFrame").contentWindow.location.reload(true);
+        })
+    }', 'text/javascript'
+);
+
+$this->headStyle()->appendStyle(
+    '#userName {width: 100px; margin-top: 10px; display: inline}
+     #messageText {width: 700px; margin-top: 10px}'
+);
+?>
+
+<h3>Group chat</h3>
+<iframe src="<?= $this->url('users/group-chat', ['action' => 'messageList']);?>" width="80%" height="400px" id="messageListFrame"></iframe>
+
+<?= $this->form()->openTag($form); ?>
+
+<label for="" id="userName"><?= $userName . ':'; ?></label>
+
+<?php
+foreach ($form as $element) {
+    echo $this->formElenemt($element);
+    echo $this->formErrors($element);
+}
+?>
+
+<?= $this->form()->closeTag(); ?>
+
+
+<!--<script>-->
+<!--    $(function) () {-->
+<!--        $("#btnRefresh").click(function (event) {-->
+<!--            document.getElementById("messageListFrame").contentWindow.location.reload(true);-->
+<!--        })-->
+<!--    }-->
+<!--</script>-->
+<!--<style>-->
+<!--    #userName {width: 100px; margin-top: 10px; display: inline}-->
+<!--    #messageText {width: 700px; margin-top: 10px}-->
+<!--</style>-->

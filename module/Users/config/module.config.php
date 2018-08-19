@@ -41,22 +41,23 @@ return [
                             ],
                         ],
                     ],
+                    'group-chat' => [
+                        'type' => \Zend\Mvc\Router\Http\Segment::class,
+                        'options' => [
+                            'route' => '/group-chat[/:action[/:id]]',
+                            'constraints' => [
+                                'action' => '[a-zA-Z][a-zA-Z0-9_]*',
+                                'id' => '\d*',
+                            ],
+                            'defaults' => [
+                                'controller' => 'Users\Controller\GroupChat',
+                                'action' => 'index',
+                            ],
+                        ],
+                    ],
                 ],
             ],
-            'group-chat' => [
-                'type' => \Zend\Mvc\Router\Http\Segment::class,
-                'options' => [
-                    'route' => '/group-chat[/:action[/:id]]',
-                    'constraints' => [
-                        'action' => '[a-zA-Z][a-zA-Z0-9_]*',
-                        'id' => '\d*',
-                    ],
-                    'defaults' => [
-                        'controller' => 'Users\Controller\GroupChat',
-                        'action' => 'index',
-                    ],
-                ],
-            ],
+
         ],
     ],
 
@@ -79,6 +80,7 @@ return [
     'service_manager' => [
         'factories' => [
             'UserRepository' => \Users\Repository\UserRepositoryFactory::class,
+            'MessagesRepository' => \Users\Repository\MessageRepositoryFactory::class,
             'LoginForm' => \Users\Form\Factory\LoginFormFactory::class,
             'RegisterForm' => \Users\Form\Factory\RegisterFormFactory::class,
             'AuthService' => \Users\Factory\AuthServiceFactory::class,
