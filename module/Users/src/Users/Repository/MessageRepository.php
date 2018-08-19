@@ -36,4 +36,13 @@ class MessageRepository
     {
         return $this->tableGateway->select();
     }
+
+    /**
+     * @param $message
+     * @return int
+     */
+    public function saveMessage($message)
+    {
+        return $this->tableGateway->insert($message);
+    }
 }

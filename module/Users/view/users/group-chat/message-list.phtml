@@ -1,2 +1,15 @@
-<?php
-var_dump($this->messageList);
+<section id="messages">
+    <?php foreach ($this->messageList as $message): ?>
+        <div class="message" style="clear: both">
+            <span class="msg-time">
+                [<?= $this->escapeHtml($message['time']); ?>]
+            </span>
+            <span class="msg-user">
+                <?= $this->escapeHtml($message['user']); ?>:
+            </span>
+            <span class="msg-message">
+                <?= $this->escapeHtml($message['message']); ?>
+            </span>
+        </div>
+    <?php endforeach; ?>
+</section>

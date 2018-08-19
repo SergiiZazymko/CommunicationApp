@@ -1,11 +1,11 @@
 <?php
 
 $this->headScript()->appendScript(
-    '$(function) () {
+    '$(function () {
         $("#btnRefresh").click(function (event) {
             document.getElementById("messageListFrame").contentWindow.location.reload(true);
         })
-    }', 'text/javascript'
+    });', 'text/javascript)'
 );
 
 $this->headStyle()->appendStyle(
@@ -23,20 +23,20 @@ $this->headStyle()->appendStyle(
 
 <?php
 foreach ($form as $element) {
-    echo $this->formElenemt($element);
-    echo $this->formErrors($element);
+    echo $this->formElement($element);
+    echo $this->formElementErrors($element);
 }
 ?>
 
 <?= $this->form()->closeTag(); ?>
 
 
-<!--<script>-->
-<!--    $(function) () {-->
-<!--        $("#btnRefresh").click(function (event) {-->
-<!--            document.getElementById("messageListFrame").contentWindow.location.reload(true);-->
-<!--        })-->
-<!--    }-->
+<script>
+    $(function () {
+        $("#btnRefresh").click(function (event) {
+            document.getElementById("messageListFrame").contentWindow.location.reload(true);
+        })
+    });
 <!--</script>-->
 <!--<style>-->
 <!--    #userName {width: 100px; margin-top: 10px; display: inline}-->

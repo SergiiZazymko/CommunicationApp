@@ -96,7 +96,10 @@ class UserRepository
     public function getUserByEmail($email)
     {
         /** @var ResultSet $rowset */
-        $rowset = $this->tableGateway->select(['email' => $email]);
+        $rowset = $this->tableGateway->select([
+            'email' => $email
+        ]);
+
         /** @var User $user */
         $user = $rowset->current();
         if (! $user) {

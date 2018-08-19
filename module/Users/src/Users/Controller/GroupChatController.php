@@ -3,9 +3,12 @@
 namespace Users\Controller;
 
 use Users\Entity\User;
+use Users\Form\MessageForm;
 use Users\Repository\MessageRepository;
 use Users\Repository\UserRepository;
+use Zend\Authentication\AuthenticationService;
 use Zend\Db\ResultSet\ResultSet;
+use Zend\Http\Request;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\ServiceManager\ServiceManager;
 use Zend\View\Model\ViewModel;
@@ -21,7 +24,31 @@ class GroupChatController extends AbstractActionController
      */
     public function indexAction()
     {
-        return new ViewModel;
+        /** @var User $user */
+        $user = $this->getLoggedUser();
+
+        /** @var Request $request */
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
+
+            /** @var string $message */
+            $message = $request->getPost()->get('message');
+
+            /** @var int $userId */
+            $userId = $user->id;
+
+            $this->sendMessage($message, $userId);
+
+            return $this->redirect()->toRoute('users/group-chat');
+        }
+
+        $form = new MessageForm;
+
+        return new ViewModel([
+            'form' => $form,
+            'userName' => $user->name,
+        ]);
     }
 
     /**
@@ -46,8 +73,13 @@ class GroupChatController extends AbstractActionController
         $messageList = [];
 
         foreach ($messages as $message) {
-            $fromUser = $userRepository->getUser($message->id);
+
+            /** @var User $fromUser */
+            $fromUser = $userRepository->getUser($message->user_id);
+
+            /** @var array $messageData */
             $messageData = [];
+
             $messageData['user'] = $fromUser->name;
             $messageData['time'] = $message->time;
             $messageData['message'] = $message->message;
@@ -60,5 +92,41 @@ class GroupChatController extends AbstractActionController
         ]);
         $viewModel->setTerminal(true);
         return $viewModel;
+    }
+
+    /**
+     * @param $messageText
+     * @param $userId
+     * @return int
+     */
+    protected function sendMessage($messageText, $userId)
+    {
+        /** @var MessageRepository $messagesRepository */
+        $messagesRepository = $this->serviceLocator->get('MessagesRepository');
+
+        /** @var array $data */
+        $data = [
+            'user_id' => $userId,
+            'message' => $messageText,
+        ];
+
+        return $messagesRepository->saveMessage($data);
+    }
+
+    /**
+     * @return bool
+     */
+    protected function getLoggedUser()
+    {
+        /** @var AuthenticationService $authService */
+        $authService = $this->getServiceLocator()->get('AuthService');
+
+        /** @var string $email */
+        $email = $authService->getStorage()->read();
+
+        if ($email) {
+            return $this->getServiceLocator()->get('UserRepository')->getUserByEmail($email);
+        }
+        return false;
     }
 }
