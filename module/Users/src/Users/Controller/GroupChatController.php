@@ -27,6 +27,12 @@ class GroupChatController extends AbstractActionController
         /** @var User $user */
         $user = $this->getLoggedUser();
 
+        if (!$user) {
+            return $this->redirect()->toRoute('users', [
+                'action' => 'login',
+            ]);
+        }
+
         /** @var Request $request */
         $request = $this->getRequest();
 

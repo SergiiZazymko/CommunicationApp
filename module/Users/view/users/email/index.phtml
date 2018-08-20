@@ -1,0 +1,21 @@
+<?php
+
+echo '<h2>Send email</h2>';
+echo $this->form()->openTag($this->form);
+echo '<table>';
+
+foreach ($this->form as $element) {
+    echo '<tr>';
+    echo '<td width="150px">';
+    echo $this->formLabel($element);
+    echo '</td>';
+    echo '<td width="300px">';
+    echo $this->formElement($element);
+    echo $this->formElementErrors($element);
+    echo '</td>';
+    echo '</tr>';
+
+}
+
+echo '</table>';
+echo $this->form()->closeTag();

@@ -55,6 +55,19 @@ return [
                             ],
                         ],
                     ],
+                    'email' => [
+                        'type' => \Zend\Mvc\Router\Http\Segment::class,
+                        'options' => [
+                            'route' => '/email[/:action]',
+                            'constraints' => [
+                                'action' => '[a-zA-Z][a-zA-Z0-9_]*',
+                            ],
+                            'defaults' => [
+                                'controller' => 'Users\Controller\Email',
+                                'action' => 'index',
+                            ],
+                        ],
+                    ],
                 ],
             ],
 
@@ -63,6 +76,7 @@ return [
 
     'controllers' => [
         'invokables' => [
+            'Users\Controller\Email' => \Users\Controller\EmailController::class,
             'Users\Controller\Index' => \Users\Controller\IndexController::class,
             'Users\Controller\Register' => \Users\Controller\RegisterController::class,
             'Users\Controller\Login' => \Users\Controller\LoginController::class,
@@ -85,6 +99,7 @@ return [
             'RegisterForm' => \Users\Form\Factory\RegisterFormFactory::class,
             'AuthService' => \Users\Factory\AuthServiceFactory::class,
             'UserEditForm' => \Users\Form\Factory\UserEditFormFactory::class,
+            'EmailForm' => \Users\Form\Factory\EmailFormFactory::class,
         ],
         'aliases' => [
 
