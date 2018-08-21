@@ -54,6 +54,7 @@ class Module
             MvcEvent::EVENT_DISPATCH,
             function ($e) {
                 $controller = $e->getTarget();
+                var_dump($controller);
                 $controllerName = $controller->getEvent()->getRouteMatch()->getParam('controller');
                 if (in_array($controllerName, ['Users\\Controller\\Login'])) {
                     $controller->layout('layout/mylayout');
@@ -61,5 +62,4 @@ class Module
             }
         );
     }
-
 }
