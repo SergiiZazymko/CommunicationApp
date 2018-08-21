@@ -86,6 +86,9 @@ return [
     ],
 
     'view_manager' => [
+        'template_map' => [
+            'layout/mylayout' => __DIR__ . '/../view/layout/mylayout.phtml',
+        ],
         'template_path_stack' => [
             'users' => __DIR__ . '/../view',
         ],
